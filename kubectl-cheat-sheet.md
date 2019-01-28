@@ -76,7 +76,13 @@ data:
   password: $(echo "s33msi4" | base64)
   username: $(echo "jane" | base64)
 EOF
+
+# Create secret using literals
+kubectl create secret generic db-credentials --from-literal=db_username=root --from-literal=db_password=password
+
 ```
+
+
 
 ### Viewing, Finding Resources
 ```
