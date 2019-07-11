@@ -291,7 +291,7 @@ ae8535e7dd39        94ec7e53edfc                      "nginx -g 'daemon of…"  
 
 - `36: eth0@if37` is the virtual ethernet pipe end inside the pod
 
-- `eth0@if37` - This means this pod's eth0 is linked to the node's 11th interface.
+- `eth0@if37` - This means this pod's eth0 is linked to the node's 37th interface.
 
 - Now run `ip addr` on the node
 
