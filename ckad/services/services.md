@@ -152,16 +152,16 @@ So the service has created `end-points` for each backend pods `IP:Port`
 
 - Run the below command
 
-  ```
+```
   $ sudo iptables -S -t nat | grep 30050
 -A KUBE-SERVICES -d 10.105.120.204/32 -p tcp -m comment --comment "default/nginx-service-clusterip: cluster IP" -m tcp --dport 30050 -j KUBE-SVC-BNADCOKSJRTPXUOH
-  ```
+```
 
 - Notice that is doing a -j (jump) to another chain/extension , in this case KUBE-SVC-BNADCOKSJRTPXUOH
 
 - Lets see the `iptables` rule for `KUBE-SVC-BNADCOKSJRTPXUOH`
 
-  ```
+```
   $ sudo iptables -S -t nat | grep KUBE-SVC-BNADCOKSJRTPXUOH
 -N KUBE-SVC-BNADCOKSJRTPXUOH
 -A KUBE-SERVICES -d 10.105.120.204/32 -p tcp -m comment --comment "default/nginx-service-clusterip: cluster IP" -m tcp --dport 30050 -j KUBE-SVC-BNADCOKSJRTPXUOH
@@ -171,19 +171,19 @@ So the service has created `end-points` for each backend pods `IP:Port`
 ```
 
 - This is showing jumps to three more services:
-  ```
+```
   KUBE-SEP-FAGHYLWQUUH3IOAE
   KUBE-SEP-YP3W34LIPPQTOVNM
   KUBE-SEP-5YOGA5NVOUBKK72C
-  ```
+```
 - Lets look into one of them: `KUBE-SEP-FAGHYLWQUUH3IOAE`
 
-  ```
+```
   $ sudo iptables -S -t nat | grep KUBE-SEP-FAGHYLWQUUH3IOAE
 -N KUBE-SEP-FAGHYLWQUUH3IOAE
 -A KUBE-SEP-FAGHYLWQUUH3IOAE -s 172.17.0.15/32 -j KUBE-MARK-MASQ
 -A KUBE-SEP-FAGHYLWQUUH3IOAE -p tcp -m tcp -j DNAT --to-destination 172.17.0.15:80
-  ```
+```
 
 - And its forwarding the traffic to one of the backend pod: `172.17.0.15:80`
 
@@ -246,7 +246,7 @@ So the service has created `end-points` for each backend pods `IP:Port`
 
 - Lets list the containers for a pod as below, run it from the node:
 
-  ```
+```
   docker ps | grep nginx-deployment-784b7cc96d-4whdj
 ae8535e7dd39        94ec7e53edfc                      "nginx -g 'daemon of…"   About an hour ago   Up About an hour                        k8s_nginx_nginx-deployment-784b7cc96d-4whdj_default_e791506c-8fa9-11e9-a29b-080027d717d4_1
 790816c708b6        k8s.gcr.io/pause:3.1              "/pause"                 About an hour ago   Up About an hour                        k8s_POD_nginx-deployment-784b7cc96d-4whdj_default_e791506c-8fa9-11e9-a29b-080027d717d4_1
@@ -313,7 +313,7 @@ ae8535e7dd39        94ec7e53edfc                      "nginx -g 'daemon of…"  
     link/ether 9a:3e:78:be:36:2e brd ff:ff:ff:ff:ff:ff link-netnsid 12
     inet6 fe80::983e:78ff:febe:362e/64 scope link
        valid_lft forever preferred_lft forever
-       ```
+```
 
 - The 37th interface is veth8459e8f in this example output. This is the virtual ethernet pipe to the pod we're investigating.
 
