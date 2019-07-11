@@ -257,9 +257,9 @@ ae8535e7dd39        94ec7e53edfc                      "nginx -g 'daemon of…"  
 
 - Lets get the PID for the above containers:
 
-  ```
+```
   docker inspect --format '{{ .State.Pid }}' ae8535e7dd39
-  ```
+```
 
 - We will use a command `nsenter` to run a command in the pod's namespace
 
@@ -273,7 +273,7 @@ ae8535e7dd39        94ec7e53edfc                      "nginx -g 'daemon of…"  
 
 - First, run ip addr in the pod's network namespace using nsenter.
 
-  ```
+```
   $ sudo nsenter -t 5787 -n ip addr
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
@@ -285,7 +285,7 @@ ae8535e7dd39        94ec7e53edfc                      "nginx -g 'daemon of…"  
     link/ether 02:42:ac:11:00:11 brd ff:ff:ff:ff:ff:ff link-netnsid 0
     inet 172.17.0.17/16 brd 172.17.255.255 scope global eth0
        valid_lft forever preferred_lft forever
-   ```
+```
 
 - `36: eth0@if37` is the virtual ethernet pipe end inside the pod
 
@@ -293,7 +293,7 @@ ae8535e7dd39        94ec7e53edfc                      "nginx -g 'daemon of…"  
 
 - Now run `ip addr` on the node
 
-  ```
+```
   $ ip addr
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
@@ -313,8 +313,7 @@ ae8535e7dd39        94ec7e53edfc                      "nginx -g 'daemon of…"  
     link/ether 9a:3e:78:be:36:2e brd ff:ff:ff:ff:ff:ff link-netnsid 12
     inet6 fe80::983e:78ff:febe:362e/64 scope link
        valid_lft forever preferred_lft forever
-
-  ```
+       ```
 
 - The 37th interface is veth8459e8f in this example output. This is the virtual ethernet pipe to the pod we're investigating.
 
@@ -322,7 +321,7 @@ ae8535e7dd39        94ec7e53edfc                      "nginx -g 'daemon of…"  
 
 - To list just the Kubernetes Service NAT rules, use the iptables command and the -L flag to specify the correct chain:
 
-  ```
+```
   $sudo iptables -t nat -L KUBE-SERVICES
 Chain KUBE-SERVICES (2 references)
 target     prot opt source               destination
@@ -338,7 +337,7 @@ KUBE-NODEPORTS  all  --  anywhere             anywhere             /* kubernetes
 
 - The below lines from the output shows the services we created previously:
 
-  ```
+```
   target     prot opt source               destination
   KUBE-SVC-BNADCOKSJRTPXUOH  tcp  --  anywhere             10.105.120.204       /* default/nginx-service-clusterip: cluster IP */ tcp dpt:30050
 KUBE-SVC-I64SNEMOLCWHJHS3  tcp  --  anywhere             10.108.67.24         /* default/nginx-service-nodeport: cluster IP */ tcp dpt:www
