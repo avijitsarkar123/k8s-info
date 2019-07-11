@@ -334,8 +334,7 @@ KUBE-SVC-I64SNEMOLCWHJHS3  tcp  --  anywhere             10.108.67.24         /*
 KUBE-SVC-NPX46M4PTMTKRN6Y  tcp  --  anywhere             10.96.0.1            /* default/kubernetes:https cluster IP */ tcp dpt:https
 KUBE-SVC-TCOU7JCQXEZGVUNU  udp  --  anywhere             10.96.0.10           /* kube-system/kube-dns:dns cluster IP */ udp dpt:domain
 KUBE-SVC-ERIFXISQEP7F7OF4  tcp  --  anywhere             10.96.0.10           /* kube-system/kube-dns:dns-tcp cluster IP */ tcp dpt:domain
-KUBE-NODEPORTS  all  --  anywhere             anywhere             /* kubernetes service nodeports; NOTE: this must be the last rule in this chain */ ADDRTYPE match dst-type LOCAL
-  ```
+KUBE-NODEPORTS  all  --  anywhere             anywhere             /* kubernetes service nodeports; NOTE: this must be the last rule in this chain */ ADDRTYPE match dst-type LOCAL```
 
 - The below lines from the output shows the services we created previously:
 
@@ -343,9 +342,7 @@ KUBE-NODEPORTS  all  --  anywhere             anywhere             /* kubernetes
   target     prot opt source               destination
   KUBE-SVC-BNADCOKSJRTPXUOH  tcp  --  anywhere             10.105.120.204       /* default/nginx-service-clusterip: cluster IP */ tcp dpt:30050
 KUBE-SVC-I64SNEMOLCWHJHS3  tcp  --  anywhere             10.108.67.24         /* default/nginx-service-nodeport: cluster IP */ tcp dpt:www
-  ```
+```
 
 
 ### Important Points
-
-####
